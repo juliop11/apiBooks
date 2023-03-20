@@ -14,14 +14,16 @@ function postRegister(request, response) {
 
     connection.query(sql, function (err, result) {
 
-        if (err)
+        if (err) {
             console.log(err);
+            response.send("Error al agregar usuario")
+        }
         else {
             console.log(result);
             if (result.insertId)
-                response.send(String(result.insertId));
+                response.send("Usuario agregado");
             else
-                response.send("-1");
+                response.send("Error al agregar usuario");
         }
     })
 
@@ -30,18 +32,24 @@ function postRegister(request, response) {
 function postLogin(request, response) {
 
     console.log(request.body);
-    let password= request.body.password;
+    let password = request.body.password;
     let params = [password]
     let sql = "SELECT id_user, name, last_name, email, photo FROM user WHERE password = ? AND user.email = user.email";
-        
+
     console.log(sql);
 
     connection.query(sql, params, function (err, result) {
 
-        if (err)
+        if (err) {
             console.log(err);
+            response.send("Datos incorrectos")
+        }
         else {
-            response.send(result)
+            console.log(result);
+             if (result.length>0)
+                response.send(result);
+            else
+                response.send("Datos incorrectos");
         }
     })
 }
