@@ -1,6 +1,25 @@
 const connection = require("../database");
 
 
+function getBooks(request, response){
+
+    let sql;
+
+    if (request.query.id_user.name == id_user.name) {
+
+        sql = "SELECT tittle, type, author, price, photo FROM book";
+    }
+
+    connection.query(sql, function (err, result) {
+
+        if (err)
+            console.log(err);
+        else {
+            response.send(result)
+        }
+    })
+}
+
 function postRegister(request, response) {
 
     console.log(request.body);
@@ -42,16 +61,16 @@ function postLogin(request, response) {
 
         if (err) {
             console.log(err);
-            response.send("Datos incorrectos")
+            response.send(null)
         }
         else {
             console.log(result);
              if (result.length>0)
-                response.send(result);
+                response.send(result[0]);
             else
-                response.send("Datos incorrectos");
+                response.send(null);
         }
     })
 }
 
-module.exports = { postRegister, postLogin };
+module.exports = { postRegister, postLogin, getBooks};
