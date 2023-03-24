@@ -74,7 +74,7 @@ function putBook(request, response) {
         request.body.id_book,
         request.body.id_user];
 
-    let sql = "UPDATE book SET  title=?, type=?, author=?, price=?, photo=? WHERE id_book =? AND id_user =?";
+    let sql = "UPDATE book SET  title=COALESCE(?, title), type=COALESCE(?, type), author=COALESCE(?, author), price=COALESCE(?, price), photo=COALESCE(?, photo) WHERE id_book =? AND id_user =?";
 
     connection.query(sql, params, function (err, result) {
         if (err) {
