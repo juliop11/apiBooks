@@ -63,7 +63,32 @@ function postLogin(request, response) {
     })
 }
 
+function putProfile(request, response) {
+
+    let respuesta;
+
+    let params = [
+        request.body.id_user,
+        request.body.name,
+        request.body.last_name,
+        request.body.email,
+        request.body.photo,
+        request.body.password
+    ];
+
+    let sql = "UPDATE user SET name = ?, last_name = ?, email = ?, photo = ?, password = ? WHERE id_user = ?"
+
+    connection.query(sql, params, function (err, result) {
+
+        if (err) {
+            console.error(err);
+            respuesta = { error: null, codigo: 200, mensaje: 'Error al actualizar el usuario', data: null, userdata: result }
+        } else {
+            respuesta = { error: null, codigo: 200, mensaje: 'Usuario actualizado correctamente', data: null, userdata: result }
+        }
+        response.send(respuesta);
+    })
+}
 
 
-
-module.exports = { postRegister, postLogin};
+module.exports = { postRegister, postLogin, putProfile };
