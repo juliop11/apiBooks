@@ -76,7 +76,7 @@ function putProfile(request, response) {
         request.body.password
     ];
 
-    let sql = "UPDATE user SET name = ?, last_name = ?, email = ?, photo = ?, password = ? WHERE id_user = ?"
+    let sql = "UPDATE user SET name=COALESCE(?, name) , last_name=COALESCE(?, last_name), email=COALESCE(?, email), photo=COALESCE(?, photo), password=COALESCE(?, password) WHERE id_user = ?"
 
     connection.query(sql, params, function (err, result) {
 
