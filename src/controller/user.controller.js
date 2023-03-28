@@ -68,13 +68,14 @@ function putProfile(request, response) {
     let respuesta;
 
     let params = [
-        request.body.id_user,
         request.body.name,
         request.body.last_name,
         request.body.email,
         request.body.photo,
-        request.body.password
+        request.body.password,
+        request.body.id_user
     ];
+console.log(params);
 
     let sql = "UPDATE user SET name=COALESCE(?, name) , last_name=COALESCE(?, last_name), email=COALESCE(?, email), photo=COALESCE(?, photo), password=COALESCE(?, password) WHERE id_user = ?"
 
@@ -84,6 +85,7 @@ function putProfile(request, response) {
             console.error(err);
             respuesta = { error: null, codigo: 200, mensaje: 'Error al actualizar el usuario', data: null, userdata: result }
         } else {
+            console.log(result);
             respuesta = { error: null, codigo: 200, mensaje: 'Usuario actualizado correctamente', data: null, userdata: result }
         }
         response.send(respuesta);
